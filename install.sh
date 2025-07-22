@@ -4,18 +4,24 @@ set -e # exit if any command fails
 
 echo "📦 Installing dotfiles..."
 
+echo "📦 Installing dependencies..."
+
+sudo pacman -Syu \
+  picom \
+  less
+
 # Function to safely create symlinks
 link_file() {
   local src=$1
   local dest=$2
-
-  echo "🔗 Linking $src → $dest"
 
   # Remove existing file, folder, or symlink
   if [ -e "$dest" ] || [ -L "$dest" ]; then
     echo "🗑️ Removing existing $dest"
     rm -rf "$dest"
   fi
+
+  echo "🔗 Linking $src → $dest"
 
   mkdir -p "$(dirname "$dest")"
   ln -sfn "$src" "$dest"
