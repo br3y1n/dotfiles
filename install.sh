@@ -8,7 +8,17 @@ echo "📦 Installing dependencies..."
 
 sudo pacman -Syu \
   picom \
-  less
+  less \
+  lazygit \
+  nvm \
+  nvim \
+  pyenv \
+  rofi \
+  zoxide \
+  docker \
+  docker-compose \
+  dbeaver \
+  zsh
 
 # Function to safely create symlinks
 link_file() {
