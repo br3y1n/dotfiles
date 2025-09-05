@@ -1,9 +1,6 @@
 return {
   "yetone/avante.nvim",
-  -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  -- ⚠️ must add this setting! ! !
   build = function()
-    -- conditionally use the correct build system for the current OS
     if vim.fn.has("win32") == 1 then
       return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
     else
@@ -11,49 +8,39 @@ return {
     end
   end,
   event = "VeryLazy",
-  version = false, -- Never set this value to "*"! Never!
+  version = false,
   ---@module 'avante'
   ---@type avante.Config
   opts = {
-    provider = "sofia-claude-35",
+    mode = "legacy",
+    provider = "sofia",
     providers = {
-      ["sofia-gpt"] = {
+      ["sofia"] = {
         __inherited_from = "openai",
-        endpoint = "https://sofia.opensistemas.com/raw/v1",
-        api_key_name = "SOFIA_TOKEN",
-        model = "openrouter-gpt-4.1-mini",
-      },
-      ["sofia-gemini"] = {
-        __inherited_from = "openai",
-        endpoint = "https://sofia.opensistemas.com/raw/v1",
-        api_key_name = "SOFIA_TOKEN",
-        model = "gemini-2.5-flash",
-      },
-      ["sofia-perplexity"] = {
-        __inherited_from = "openai",
-        endpoint = "https://sofia.opensistemas.com/raw/v1",
-        api_key_name = "SOFIA_TOKEN",
-        model = "openrouter-perplexity-sonar-online",
-      },
-      ["sofia-claude-37"] = {
-        __inherited_from = "openai",
-        endpoint = "https://sofia.opensistemas.com/raw/v1",
+        endpoint = "https://sofia.opensistemas.com/raw",
         api_key_name = "SOFIA_TOKEN",
         model = "openrouter-claude-3.7",
+        model_names = {
+          "bugs and feats",
+          "SofIA",
+          "openrouter-claude-3.5",
+          "perplexity-online",
+          "openrouter-gpt-4.1-mini",
+          "openrouter-claude-3.7",
+          "gemini-2.5-flash",
+          "developer",
+          "developer-long-context",
+          "architect",
+        },
       },
-      ["sofia-claude-35"] = {
-        __inherited_from = "openai",
-        endpoint = "https://sofia.opensistemas.com/raw/v1",
-        api_key_name = "SOFIA_TOKEN",
-        model = "openrouter-claude-3.5",
-      },
-      -- Add here other models you want to be available in `AvanteModels`.
+    },
+    input = {
+      provider = "snacks",
     },
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
     "echasnovski/mini.pick", -- for file_selector provider mini.pick
     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
